@@ -111,5 +111,8 @@ data class Meal(
     @SerializedName("strTags")
     val strTags: String?,
     @SerializedName("strYoutube")
-    val strYoutube: String
+    val strYoutube: String,
+
+    val ingredients: List<String>? = listOf()
+
 )

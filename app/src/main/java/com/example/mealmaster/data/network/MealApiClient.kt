@@ -27,5 +27,4 @@ object MealApiClient {
         val response = apiClient.get(url).body() as MealResponse
         return response.meals
     }
-
 }

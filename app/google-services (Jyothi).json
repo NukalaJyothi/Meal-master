@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "812330590646",
+    "project_id": "meal-master-dbdf5",
+    "storage_bucket": "meal-master-dbdf5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812330590646:android:34cfe419f7b0c8a6cba117",
+        "android_client_info": {
+          "package_name": "com.example.mealmaster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC7kMBrddRN1uCOQOOyhcaR5-I8wSB7lQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
