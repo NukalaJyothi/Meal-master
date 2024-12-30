@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -65,6 +66,11 @@ class LoginActivity : ComponentActivity() {
     }
 
     private fun loginUser(email: String, password: String) {
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill in both fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -88,7 +94,6 @@ class LoginActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun LoginScreen(
     onLogin: (String, String) -> Unit,
@@ -97,6 +102,7 @@ fun LoginScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var showToast by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -166,7 +172,6 @@ fun LoginScreen(
                         shape = RoundedCornerShape(12.dp)
                     )
 
-
                     TextField(
                         value = password,
                         onValueChange = { password = it },
@@ -182,7 +187,13 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Button(
-                        onClick = { onLogin(email, password) },
+                        onClick = {
+                            if (email.isEmpty() || password.isEmpty()) {
+                                showToast = true
+                            } else {
+                                onLogin(email, password)
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp),
@@ -195,6 +206,10 @@ fun LoginScreen(
                             text = "Log In",
                             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
                         )
+                    }
+
+                    if (showToast) {
+                        Toast.makeText(LocalContext.current, "Please enter your email and password to continue", Toast.LENGTH_SHORT).show()
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

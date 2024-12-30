@@ -67,6 +67,7 @@ fun RecipeDetailScreen(
                 modifier = Modifier
                     .padding(top = 15.dp)
                     .padding(bottom = 15.dp)
+                    .padding(start = 10.dp)
                     .align(Alignment.CenterHorizontally)
             )
 

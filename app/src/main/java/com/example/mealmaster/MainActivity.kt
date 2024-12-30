@@ -69,30 +69,26 @@ class MainActivity : ComponentActivity() {
 
 
     private fun getIngredients(meal: Meal): String {
-        var ingredients = ""
+        val ingredients = mutableListOf<String>()
 
-        with(meal) {
-            if (!strIngredient1.isNullOrEmpty()) ingredients += "$strIngredient1 - $strMeasure1\n"
-            if (!strIngredient2.isNullOrEmpty()) ingredients += "$strIngredient2 - $strMeasure2\n"
-            if (!strIngredient3.isNullOrEmpty()) ingredients += "$strIngredient3 - $strMeasure3\n"
-            if (!strIngredient4.isNullOrEmpty()) ingredients += "$strIngredient4 - $strMeasure4\n"
-            if (!strIngredient5.isNullOrEmpty()) ingredients += "$strIngredient5 - $strMeasure5\n"
-            if (!strIngredient6.isNullOrEmpty()) ingredients += "$strIngredient6 - $strMeasure6\n"
-            if (!strIngredient7.isNullOrEmpty()) ingredients += "$strIngredient7 - $strMeasure7\n"
-            if (!strIngredient8.isNullOrEmpty()) ingredients += "$strIngredient8 - $strMeasure8\n"
-            if (!strIngredient9.isNullOrEmpty()) ingredients += "$strIngredient9 - $strMeasure9\n"
-            if (!strIngredient10.isNullOrEmpty()) ingredients += "$strIngredient10 - $strMeasure10\n"
-            if (!strIngredient11.isNullOrEmpty()) ingredients += "$strIngredient11 - $strMeasure11\n"
-            if (!strIngredient12.isNullOrEmpty()) ingredients += "$strIngredient12 - $strMeasure12\n"
-            if (!strIngredient13.isNullOrEmpty()) ingredients += "$strIngredient13 - $strMeasure13\n"
-            if (!strIngredient14.isNullOrEmpty()) ingredients += "$strIngredient14 - $strMeasure14\n"
-            if (!strIngredient15.isNullOrEmpty()) ingredients += "$strIngredient15 - $strMeasure15\n"
-            if (!strIngredient16.isNullOrEmpty()) ingredients += "$strIngredient16 - $strMeasure16\n"
-            if (!strIngredient17.isNullOrEmpty()) ingredients += "$strIngredient17 - $strMeasure17\n"
-            if (!strIngredient18.isNullOrEmpty()) ingredients += "$strIngredient18 - $strMeasure18\n"
-            if (!strIngredient19.isNullOrEmpty()) ingredients += "$strIngredient19 - $strMeasure19\n"
-            if (!strIngredient20.isNullOrEmpty()) ingredients += "$strIngredient20 - $strMeasure20\n"
+        for (i in 1..20) {
+            try {
+                val ingredientField = meal::class.java.getDeclaredField("strIngredient$i")
+                val measureField = meal::class.java.getDeclaredField("strMeasure$i")
+
+                ingredientField.isAccessible = true
+                measureField.isAccessible = true
+
+                val ingredient = ingredientField.get(meal) as? String
+                val measure = measureField.get(meal) as? String
+
+                if (!ingredient.isNullOrEmpty()) {
+                    ingredients.add("$ingredient - $measure")
+                }
+            }
+            catch (_: NoSuchFieldException) {}
+            catch (_: IllegalAccessException) {}
         }
-        return ingredients.trimEnd('\n')
+        return ingredients.joinToString("\n")
     }
 }
